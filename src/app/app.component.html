@@ -1,0 +1,41 @@
+<div>
+  <table style="table-layout: fixed; width: 100%;" border="1">
+    <thead>
+      <tr style="display: block; text-align: left; padding: 0;">
+        <th>Product</th>
+        <th>MIC</th>
+        <th>Code</th>
+        <th>Sym</th>
+      </tr>
+    </thead>
+    <tbody style="display: block; overflow-x: hidden; overflow-y: auto; height: 600px;">
+      <tr *ngFor="let node of data; let i = index" style="width: 100%">
+        <td style="cursor: pointer;" *ngIf="isCategory(node)" style="min-width: 260px; width: 260px; padding: 0;">
+          <span [ngStyle]="{'padding-left.em': node.nesting}">
+            <i [ngClass]="{fa: true, 'fa-caret-right': !node.expanded, 'fa-caret-down': node.expanded}" aria-hidden="true" style="width: 1em; height: 1em;" (click)="nodeExpanded(node, i)"></i>{{node.label}}
+          </span>
+        </td>
+        <td style="cursor: pointer;" *ngIf="isGroup(node)">
+          <span [ngStyle]="{'padding-left.em': node.nesting}">
+            <i [ngClass]="{fa: true, 'fa-caret-right': !node.expanded, 'fa-caret-down': node.expanded}" aria-hidden="true" style="width: 1em; height: 1em;" (click)="nodeExpanded(node, i)"></i>
+            <input type="checkbox" [indeterminate]="node.partial" [checked]="node.checked" (change)="groupToggled($event.target.checked, node)" style="display: inline-block; vertical-align: text-top; margin-left: 0; margin-right: .5em">{{node.label}}
+          </span>
+        </td>
+        <td style="cursor: pointer;" *ngIf="isProduct(node)">
+          <span [ngStyle]="{'padding-left.em': node.nesting}">
+            <input type="checkbox" [checked]="node.checked" [disabled]="node.disabled" (change)="productToggled($event.target.checked, node)" style="display: inline-block; vertical-align: text-top; margin-right: .5em; margin-left: .4em">{{node.label}}
+          </span>
+        </td>
+        <td style="width: 15%; min-width: 15%; padding: 0;">
+          {{node.mic}}
+        </td>
+        <td style="width: 15%; min-width: 15%; padding: 0;">
+          {{node.code}}
+        </td>
+        <td style="width: 15%; min-width: 15%; padding: 0;">
+          {{node.symbol}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
